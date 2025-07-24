@@ -37,7 +37,7 @@ const Createtodo = () => {
       </div>
 
       <Modal
-        title="Todo əlavə et"
+        title="Wrtite your todo"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -54,9 +54,10 @@ const Createtodo = () => {
           <Form.Item
             label="Prioritet"
             name="priority"
-            rules={[{ required: true, message: 'Lütfən prioritet seçin!' }]}
+            rules={[{   required: true, message: 'Select priority!' }]}
+            initialValue={"Low"}
           >
-            <select className="w-full p-2 border border-gray-300 rounded">
+            <select   className="w-full p-2 border border-gray-300 rounded">
               <option value="Low">Low Priority</option>
               <option value="Medium">Medium Priority</option>
               <option value="High">High priority</option>

@@ -5,29 +5,52 @@ import { FaMoon } from "react-icons/fa";
 import { FaSun } from "react-icons/fa";
 import Dropdown from './Dropdown';
 import TodoList from './TodoList';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Createtodo from './Createtodo';
+import { toggleDarkMode } from './CounterSlice/CreateSlice';
 
 const TodoInput = () => {
     const dispatch = useDispatch();
-    const [darkMode, setDarkMode] = React.useState(false);
     const [isOpen, setIsOpen] = React.useState(false);
+    const [darkMode, setDarkMode] = React.useState(false);
     const [selected, setSelected] = React.useState("All")
+    const isDarkMode = useSelector((state) => state.counter.darkMode)
+    const{ value} = useSelector(state => state.counter);
 
+    const filteredTodos = value.filter((todo) => {
+        if (selected == "All") {
+            return true;
+        }
+        if (selected == "Complete") {
+            return todo.isChecked;
+        }
+        if (selected =="Incomplete") {
+            return !todo.isChecked;
+        }else{
+            console.log("burdayam");
+            return true;
+            
+        }
 
- useEffect(() => {
-  if (darkMode) {
-    document.body.classList.add('dark');
-  } else {
-    document.body.classList.remove('dark');
-  }
-}, [darkMode]);
+    })
+   
+    
 
+    useEffect(() => {
+        const body = document.body
+        if (isDarkMode) {
+            body.style.backgroundColor = 'black';
+            body.classList.add('dark');
+        } else {
+            body.style.backgroundColor = 'white';
+            body.classList.remove('dark');
+        }
+    }, [isDarkMode]);
 
 
     return (
-        <div className=''>
+        <div className=' '>
             <div className=' flex  justify-center  gap-5  '>
 
                 <div className=' shadow w-[30%] mt-10 text-white p-1 rounded-lg flex items-center justify-between border border-violet-600  '>
@@ -37,22 +60,24 @@ const TodoInput = () => {
 
                 <div className='flex gap-5  justify-between items-end '>
 
-                    <div className='  flex items-center   p-5 justify-between h-[50px] text-white  rounded-lg border cursor-pointer'>
+                    <div className='  flex items-center   p-5 justify-between h-[50px] text-white  rounded-lg  cursor-pointer'>
                         <Dropdown selected={selected} setSelected={setSelected} />
                     </div>
 
                     <div className='  bg-violet-700 flex items-center justify-center w-[50px] h-[50px] text-white   rounded-lg border border-violet-600 cursor-pointer'>
                         {
-                            darkMode ? <FaMoon onClick={() => setDarkMode(!darkMode)} className='text-[20px] transition-transform duration-300 rotate-0 hover:rotate-180  ' /> : <FaSun className='text-[20px] transition-transform duration-300 rotate-0 hover:rotate-180 ' onClick={() => setDarkMode(!darkMode)} />
+                            isDarkMode
+                                ? <FaMoon onClick={() => dispatch(toggleDarkMode())} className='text-[20px] transition-transform duration-300 rotate-0 hover:rotate-180' />
+                                : <FaSun onClick={() => dispatch(toggleDarkMode())} className='text-[20px] transition-transform duration-300 rotate-0 hover:rotate-180' />
                         }
 
                     </div>
                 </div>
             </div>
-            <TodoList />
+            <TodoList todos={filteredTodos} />
 
 
-           <Createtodo />
+            <Createtodo />
 
         </div>
     )
