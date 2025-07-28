@@ -1,12 +1,30 @@
-# React + Vite
+# 📝 ToDoList
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and functional ToDo List application. Users can add, edit, and delete tasks. The project is built using **React**, **Redux**, and **Tailwind CSS**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- ✅ Add new tasks
+- ✏️ Edit existing tasks
+- ❌ Delete tasks
+- 🌙/☀️ Toggle Dark/Light mode
+- 💾 Data persistence using `localStorage`
+- 💡 Clean and responsive UI
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Technologies Used
+
+- React
+- Redux Toolkit
+- Tailwind CSS
+- UUID (for unique IDs)
+- LocalStorage (for data saving)
+
+---
+<img width="390" height="689" alt="image" src="https://github.com/user-attachments/assets/dd5045ef-7847-48e3-9803-5034aa57dfcc" />
+
+<img width="1666" height="823" alt="image" src="https://github.com/user-attachments/assets/e213e04f-db04-4be5-9269-5228881d83fa" />
+
