@@ -8,7 +8,7 @@ import TodoList from './TodoList';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Createtodo from './Createtodo';
-import { toggleDarkMode } from './CounterSlice/CreateSlice';
+import { findTodo, toggleDarkMode } from './CounterSlice/CreateSlice';
 
 const TodoInput = () => {
     const dispatch = useDispatch();
@@ -16,7 +16,9 @@ const TodoInput = () => {
     const [darkMode, setDarkMode] = React.useState(false);
     const [selected, setSelected] = React.useState("All")
     const isDarkMode = useSelector((state) => state.counter.darkMode)
-    const{ value} = useSelector(state => state.counter);
+    const { value } = useSelector(state => state.counter);
+
+
 
     const filteredTodos = value.filter((todo) => {
         if (selected == "All") {
@@ -25,17 +27,17 @@ const TodoInput = () => {
         if (selected == "Complete") {
             return todo.isChecked;
         }
-        if (selected =="Incomplete") {
+        if (selected == "Incomplete") {
             return !todo.isChecked;
-        }else{
+        } else {
             console.log("burdayam");
             return true;
-            
+
         }
 
     })
-   
-    
+
+
 
     useEffect(() => {
         const body = document.body
@@ -51,16 +53,20 @@ const TodoInput = () => {
 
     return (
         <div className=' '>
-            <div className=' flex  justify-center  gap-5  '>
+            <div className='flex items-center justify-center pt-5'>
+                <h1 className='text-4xl font-bold text-violet-800'>Todo List</h1>
+            </div>
 
-                <div className=' shadow w-[30%] mt-10 text-white p-1 rounded-lg flex items-center justify-between border border-violet-600  '>
-                    <input type="text" placeholder="Search todo" className="border p-2 rounded w-full outline-none  border-none text-2xl text-violet-900" />
+            <div className=' flex  flex-col-reverse md:flex-row items-center md:items-end   justify-center  md:gap-5  '>
+
+                <div className=' shadow  mt-10 text-white p-1 rounded-lg flex items-center justify-between border border-violet-600  '>
+                    <input onChange={(e) => dispatch(findTodo(e.target.value))} type="text" placeholder="Search todo" className={`${isDarkMode ? 'text-white' : 'text-violet-800'}  border p-2 rounded w-[300px] md:w-[400px] lg::w-[505px] outline-none  border-none md:text-2xl `} />
                     <CiSearch className=' text-violet-800  text-[35px]' />
                 </div>
 
-                <div className='flex gap-5  justify-between items-end '>
+                <div className='flex gap-5 justify-center md:justify-between pt-5 md:items-end '>
 
-                    <div className='  flex items-center   p-5 justify-between h-[50px] text-white  rounded-lg  cursor-pointer'>
+                    <div className='  flex items-center  bg-red-500  justify-between h-[50px] text-white  rounded-lg  cursor-pointer'>
                         <Dropdown selected={selected} setSelected={setSelected} />
                     </div>
 

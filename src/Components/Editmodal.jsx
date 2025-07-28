@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Input } from 'antd';
 
+
 const EditModal = ({ isModalOpen, editValue, setEditValue, handleSave, handleCancel }) => {
   return (
     <Modal

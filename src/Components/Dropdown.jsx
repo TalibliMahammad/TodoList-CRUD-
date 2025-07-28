@@ -10,7 +10,7 @@ const Dropdown = ({ selected, setSelected }) => {
     setSelected(option);
     setIsOpen(false);
   };
-  console.log(selected);
+ 
   
 
   return (
