@@ -10,16 +10,15 @@ const EmptyList = () => {
 
 
     return (
- <div className="flex justify-center items-center min-h-[300px]">
-  <Lottie
-    animationData={animation}
-    autoplay
-    loop: true
-    src={animation}
-    style={{ height: '50%', width: '50%' }}
-  />
-</div>
-
+      <div className="flex justify-center items-center min-h-[300px] animate-fade-in">
+        <Lottie
+          animationData={animation}
+          autoplay
+          loop={true}
+          style={{ height: '60%', width: '60%', maxWidth: '400px' }}
+          className="drop-shadow-2xl"
+        />
+      </div>
     )
 }
 

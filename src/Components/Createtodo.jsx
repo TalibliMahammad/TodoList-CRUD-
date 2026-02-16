@@ -20,7 +20,11 @@ const Createtodo = () => {
   };
 
   const handleSubmit = (values) => {
-    dispatch(addToDo(values));
+    const tags = values.tags ? String(values.tags).split(',').map(t => t.trim()).filter(t => t) : []
+    dispatch(addToDo({
+      ...values,
+      tags,
+    }));
     form.resetFields();
     setIsModalOpen(false);
   }
@@ -30,60 +34,126 @@ const Createtodo = () => {
   return (
     <div>
       <div
-        className='bg-violet-700 flex items-center justify-center w-[50px] h-[50px] text-white rounded-full border border-violet-600 cursor-pointer fixed bottom-10 right-10 shadow-lg hover:shadow-xl transition-shadow duration-300'
+        className='bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 flex items-center justify-center w-[64px] h-[64px] text-white rounded-full border-2 border-white/30 cursor-pointer fixed bottom-8 right-8 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 hover:rotate-90 z-50'
         onClick={showModal}
       >
-        <FaPlus />
+        <FaPlus className='text-2xl' />
       </div>
 
       <Modal
-        title="Wrtite your todo"
+        title={
+          <span className='text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent'>
+            Create New Todo
+          </span>
+        }
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        footer={null}
+        className="modern-modal"
+        styles={{
+          content: {
+            borderRadius: '20px',
+            padding: '24px',
+          },
+          header: {
+            borderBottom: '1px solid rgba(0,0,0,0.1)',
+            paddingBottom: '16px',
+            marginBottom: '20px',
+          }
+        }}
       >
-        <Form form={form} onFinish={handleSubmit}  >
+        <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Form.Item
-            label="Todo Mətni"
+            label={<span className="text-base font-semibold text-gray-700 dark:text-gray-300">Todo Text</span>}
             name="todoText"
-            rules={[{ required: true, message: 'Lütfən todo mətni daxil edin!' }]}
+            rules={[{ required: true, message: 'Please enter todo text!' }]}
           >
-            <input type="text" className="w-full p-2 border border-gray-300 rounded" />
+            <input 
+              type="text" 
+              className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" 
+              placeholder="Enter your todo..."
+            />
           </Form.Item>
 
           <Form.Item
-            label="Prioritet"
+            label={<span className="text-base font-semibold text-gray-700 dark:text-gray-300">Priority</span>}
             name="priority"
-            rules={[{   required: true, message: 'Select priority!' }]}
+            rules={[{ required: true, message: 'Select priority!' }]}
             initialValue={"Low"}
           >
-            <select   className="w-full p-2 border border-gray-300 rounded">
+            <select className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
               <option value="Low">Low Priority</option>
               <option value="Medium">Medium Priority</option>
-              <option value="High">High priority</option>
+              <option value="High">High Priority</option>
             </select>
           </Form.Item>
 
           <Form.Item
-            label="Deadline"
+            label={<span className="text-base font-semibold text-gray-700 dark:text-gray-300">Deadline</span>}
             name="deadline"
-            rules={[{ required: true, message: 'Lütfən deadline daxil edin!' }]}
+            rules={[{ required: true, message: 'Please enter deadline!' }]}
           >
-            <input type="date" className="w-full p-2 border border-gray-300 rounded" />
+            <input 
+              type="date" 
+              className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" 
+            />
           </Form.Item>
+          
           <Form.Item
-            label="Who must do it"
+            label={<span className="text-base font-semibold text-gray-700 dark:text-gray-300">Assignee</span>}
             name="assignee"
-            rules={[{ required: true, message: 'Lütfən kimin etməli olduğunu daxil edin!' }]}
+            rules={[{ required: true, message: 'Please enter assignee!' }]}
           >
-            <input type="text" className="w-full p-2 border border-gray-300 rounded" />
+            <input 
+              type="text" 
+              className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" 
+              placeholder="Who should do this?"
+            />
           </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Əlavə et
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Form.Item
+              label={<span className="text-base font-semibold text-gray-700 dark:text-gray-300">Category (Optional)</span>}
+              name="category"
+            >
+              <input 
+                type="text" 
+                className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" 
+                placeholder="e.g., Work, Personal..."
+              />
+            </Form.Item>
+            <Form.Item
+              label={<span className="text-base font-semibold text-gray-700 dark:text-gray-300">Tags (Optional)</span>}
+              name="tags"
+            >
+              <input 
+                type="text" 
+                className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" 
+                placeholder="tag1, tag2, tag3..."
+              />
+            </Form.Item>
+          </div>
+
+          <Form.Item
+            label={<span className="text-base font-semibold text-gray-700 dark:text-gray-300">Notes (Optional)</span>}
+            name="notes"
+          >
+            <textarea 
+              rows={3}
+              className="w-full p-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-800 dark:text-white resize-none" 
+              placeholder="Add additional notes..."
+            />
+          </Form.Item>
+          
+          <Button 
+            type="primary" 
+            htmlType="submit"
+            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 border-none h-12 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            Add Todo
           </Button>
         </Form>
-
-
       </Modal>
     </div>
   );
