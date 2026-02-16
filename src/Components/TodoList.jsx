@@ -99,145 +99,111 @@ const toggleNotes = (id) => {
 
 
   return (
-    <div className='mt-12 flex justify-center items-center gap-10 px-4'>
-      <div className='w-full max-w-[900px]'>
-        {hasVisibleTodos && todos.length > 0 && (
-          <div className='mb-4 flex items-center justify-between p-4 backdrop-blur-xl bg-white/10 dark:bg-black/20 rounded-2xl border border-white/20'>
-            <button
-              onClick={toggleSelectAll}
-              className='text-white text-sm font-semibold hover:text-purple-200 transition-colors'
-            >
-              {selectedIds.size === todos.length ? 'Deselect All' : 'Select All'}
-            </button>
-            {selectedIds.size > 0 && (
-              <div className='flex items-center gap-3'>
-                <span className='text-white/80 text-sm'>
-                  {selectedIds.size} selected
-                </span>
-                <button
-                  onClick={() => {
-                    dispatch(bulkToggle({ ids: Array.from(selectedIds), checked: true }))
-                    setSelectedIds(new Set())
-                  }}
-                  className='px-3 py-1 text-xs rounded-lg text-white bg-green-500/80 hover:bg-green-500 transition-colors'
-                >
-                  Mark Complete
-                </button>
-                <button
-                  onClick={() => {
-                    dispatch(bulkDelete(Array.from(selectedIds)))
-                    setSelectedIds(new Set())
-                  }}
-                  className='px-3 py-1 text-xs rounded-lg text-white bg-red-500/80 hover:bg-red-500 transition-colors'
-                >
-                  Delete Selected
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-        <ul className='flex flex-col gap-6 p-6 md:p-8 backdrop-blur-xl bg-white/10 dark:bg-black/20 rounded-3xl shadow-2xl border border-white/20 dark:border-white/10'>
+    <div className='max-w-3xl mx-auto mt-8'>
+      {hasVisibleTodos && todos.length > 0 && (
+        <div className='mb-3 flex items-center justify-between px-4 py-3 rounded-xl bg-white/10 dark:bg-black/10 border border-white/20'>
+          <button
+            onClick={toggleSelectAll}
+            className='text-sm font-medium text-white/90 hover:text-white transition-colors'
+          >
+            {selectedIds.size === todos.length ? 'Ləğv et' : 'Hamısını seç'}
+          </button>
+          {selectedIds.size > 0 && (
+            <div className='flex items-center gap-2'>
+              <span className='text-white/70 text-sm'>{selectedIds.size} seçilib</span>
+              <button
+                onClick={() => {
+                  dispatch(bulkToggle({ ids: Array.from(selectedIds), checked: true }))
+                  setSelectedIds(new Set())
+                }}
+                className='px-3 py-1.5 text-xs rounded-lg bg-green-500/80 hover:bg-green-500 text-white font-medium transition-colors'
+              >
+                Tamamla
+              </button>
+              <button
+                onClick={() => {
+                  dispatch(bulkDelete(Array.from(selectedIds)))
+                  setSelectedIds(new Set())
+                }}
+                className='px-3 py-1.5 text-xs rounded-lg bg-red-500/80 hover:bg-red-500 text-white font-medium transition-colors'
+              >
+                Sil
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+        <ul className='flex flex-col gap-4 p-4 md:p-6 rounded-2xl bg-white/10 dark:bg-black/10 border border-white/20 backdrop-blur-sm'>
            {hasVisibleTodos ? (
              todos.map((todo, index) => {
                const deadlineStatus = getDeadlineStatus(todo.deadline)
                const isSelected = selectedIds.has(todo.id)
-               return ( 
-               <div 
-                 key={todo.id} 
-                 className={`flex items-center flex-col justify-between gap-4 animate-fade-in transition-all duration-300 ${isSelected ? 'ring-2 ring-purple-400 ring-offset-2 ring-offset-transparent' : ''}`}
-                 style={{ animationDelay: `${index * 0.1}s` }}
+               return (
+               <div
+                 key={todo.id}
+                 className={`rounded-xl border transition-all duration-200 animate-fade-in ${isSelected ? 'ring-2 ring-purple-400/80 bg-purple-500/10 border-purple-400/50' : 'border-white/10 bg-white/5 hover:bg-white/10'}`}
+                 style={{ animationDelay: `${index * 0.05}s` }}
                >
-                 <div className='flex w-full gap-2 md:gap-4 bg-gradient-to-r from-white/30 to-white/10 dark:from-gray-800/50 dark:to-gray-700/30 backdrop-blur-sm justify-between md:justify-evenly items-center p-3 md:p-4 rounded-2xl font-semibold border border-white/20 shadow-lg'>
-                   <span className='flex gap-2 flex-col md:flex-row text-xs md:text-base items-center'>
-                     <span className='text-gray-700 dark:text-gray-300'>Priority</span>
-                     <h2 className={`px-3 py-1.5 text-xs md:text-base rounded-xl text-white font-bold shadow-md ${
-                       todo.priority === 'High' ? 'bg-gradient-to-r from-red-500 to-red-600' :
-                       todo.priority === 'Medium' ? 'bg-gradient-to-r from-yellow-500 to-orange-500' :
-                       'bg-gradient-to-r from-green-500 to-emerald-500'
-                     }`}>
-                       {todo.priority}
-                     </h2>
+                 {/* Metadata row - compact chips */}
+                 <div className='flex flex-wrap gap-2 p-3 border-b border-white/10'>
+                   <span className={`px-2.5 py-1 text-xs font-medium rounded-lg text-white ${
+                     todo.priority === 'High' ? 'bg-red-500/70' :
+                     todo.priority === 'Medium' ? 'bg-amber-500/70' : 'bg-emerald-500/70'
+                   }`}>
+                     {todo.priority}
                    </span>
-                   <span className='flex gap-2 flex-col md:flex-row text-xs md:text-base items-center'>
-                     <span className='text-gray-700 dark:text-gray-300'>Deadline</span>
-                     <div className='flex items-center gap-2'>
-                       <h2 className={`px-3 py-1.5 rounded-xl text-xs md:text-base text-white font-bold shadow-md ${
-                         deadlineStatus ? deadlineStatus.className : 'bg-gradient-to-r from-blue-500 to-indigo-600'
-                       }`}>
-                         {todo.deadline}
-                       </h2>
-                       {deadlineStatus && (
-                         <span className={`px-2 py-1 text-xs rounded-lg text-white font-bold ${deadlineStatus.className}`}>
-                           {deadlineStatus.label}
-                         </span>
-                       )}
-                     </div>
-                   </span>
-                   <span className='flex gap-2 flex-col md:flex-row text-xs md:text-base items-center'>
-                     <span className='text-gray-700 dark:text-gray-300'>Assignee</span>
-                     <h2 className='bg-gradient-to-r from-purple-500 to-pink-600 px-3 py-1.5 rounded-xl text-xs md:text-base text-white font-bold shadow-md'>
-                       {todo.assignee}
-                     </h2>
-                   </span>
-                   {todo.category && (
-                     <span className='flex gap-2 flex-col md:flex-row text-xs md:text-base items-center'>
-                       <span className='text-gray-700 dark:text-gray-300'>Category</span>
-                       <h2 className='bg-gradient-to-r from-cyan-500 to-teal-600 px-3 py-1.5 rounded-xl text-xs md:text-base text-white font-bold shadow-md'>
-                         {todo.category}
-                       </h2>
+                   {todo.deadline && (
+                     <span className={`px-2.5 py-1 text-xs font-medium rounded-lg text-white ${deadlineStatus ? deadlineStatus.className : 'bg-blue-500/70'}`}>
+                       {todo.deadline}{deadlineStatus && ` • ${deadlineStatus.label}`}
                      </span>
                    )}
-                 </div>
-                 {todo.tags && todo.tags.length > 0 && (
-                   <div className='flex flex-wrap gap-2 w-full'>
-                     {todo.tags.map((tag, tagIdx) => (
-                       <span key={tagIdx} className='px-2 py-1 text-xs rounded-lg bg-indigo-500/50 text-white border border-indigo-400/50'>
-                         #{tag}
-                       </span>
-                     ))}
-                   </div>
-                 )}
-
-                 <li className={`w-full text-white md:text-xl flex flex-col gap-3 p-4 rounded-2xl backdrop-blur-sm bg-white/5 dark:bg-black/10 border-2 transition-all duration-300 cursor-pointer group ${
-                   todo.isChecked ? 'line-through decoration-red-400 decoration-2 opacity-60 border-white/10' : 
-                   isSelected ? 'border-purple-400 bg-purple-500/20' : 'border-white/10 hover:bg-white/10 dark:hover:bg-black/20'
-                 }`}>
-                   <div className='flex items-center justify-between gap-3'>
-                     <div className='flex items-center gap-3 flex-1'>
-                       <Checkbox 
-                         onChange={() => toggleSelect(todo.id)} 
-                         checked={isSelected}
-                         className="mr-2"
-                       />
-                       <Checkbox onChange={() => dispatch(checked(todo.id))} checked={todo.isChecked} /> 
-                       <span className='break-words flex-1'>{todo.todoText}</span>
-                     </div>
-                     <span className='flex gap-4 md:gap-6'>
-                       {todo.notes && (
-                         <MdInfoOutline 
-                           onClick={() => toggleNotes(todo.id)} 
-                           className="cursor-pointer text-2xl md:text-3xl text-green-300 hover:text-green-200 transition-all duration-300 hover:scale-125" 
-                         />
-                       )}
-                       <MdContentCopy 
-                         onClick={() => dispatch(duplicateTodo(todo.id))} 
-                         className="cursor-pointer text-2xl md:text-3xl text-yellow-300 hover:text-yellow-200 transition-all duration-300 hover:scale-125 hover:rotate-12" 
-                         title="Duplicate task"
-                       />
-                       <MdEdit 
-                         onClick={() => openModal(todo.id)} 
-                         className="cursor-pointer text-2xl md:text-3xl text-blue-300 hover:text-blue-200 transition-all duration-300 hover:scale-125 hover:rotate-12" 
-                       /> 
-                       <MdDelete 
-                         onClick={() => dispatch(deleteTodo(todo.id))} 
-                         className="cursor-pointer text-2xl md:text-3xl text-red-300 hover:text-red-200 transition-all duration-300 hover:scale-125 hover:rotate-12" 
-                       />
+                   {todo.assignee && (
+                     <span className='px-2.5 py-1 text-xs font-medium rounded-lg bg-purple-500/70 text-white'>
+                       {todo.assignee}
                      </span>
+                   )}
+                   {todo.category && (
+                     <span className='px-2.5 py-1 text-xs font-medium rounded-lg bg-cyan-500/70 text-white'>
+                       {todo.category}
+                     </span>
+                   )}
+                   {todo.tags?.length > 0 && todo.tags.map((tag, tagIdx) => (
+                     <span key={tagIdx} className='px-2 py-1 text-xs rounded-lg bg-white/20 text-white/90'>
+                       #{tag}
+                     </span>
+                   ))}
+                 </div>
+
+                 <li className={`w-full flex flex-col gap-3 p-4 cursor-pointer ${
+                   todo.isChecked ? 'line-through decoration-2 decoration-red-400/60 opacity-70' : ''
+                 }`}>
+                   <div className='flex items-center justify-between gap-4'>
+                     <div className='flex items-center gap-3 flex-1 min-w-0'>
+                       <Checkbox onChange={() => toggleSelect(todo.id)} checked={isSelected} />
+                       <Checkbox onChange={() => dispatch(checked(todo.id))} checked={todo.isChecked} />
+                       <span className='text-white text-base md:text-lg break-words flex-1'>{todo.todoText}</span>
+                     </div>
+                     <div className='flex items-center gap-2 shrink-0'>
+                       {todo.notes && (
+                         <button onClick={() => toggleNotes(todo.id)} className='p-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition-colors' title="Qeydlər">
+                           <MdInfoOutline className='text-lg' />
+                         </button>
+                       )}
+                       <button onClick={() => dispatch(duplicateTodo(todo.id))} className='p-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition-colors' title="Kopyala">
+                         <MdContentCopy className='text-lg' />
+                       </button>
+                       <button onClick={() => openModal(todo.id)} className='p-2 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition-colors' title="Redaktə">
+                         <MdEdit className='text-lg' />
+                       </button>
+                       <button onClick={() => dispatch(deleteTodo(todo.id))} className='p-2 rounded-lg hover:bg-red-500/20 text-white/70 hover:text-red-300 transition-colors' title="Sil">
+                         <MdDelete className='text-lg' />
+                       </button>
+                     </div>
                    </div>
                    {showNotes[todo.id] && todo.notes && (
-                     <div className='mt-2 p-3 bg-white/10 dark:bg-black/20 rounded-xl border border-white/20'>
-                       <div className='text-sm text-white/80 font-semibold mb-1'>Notes:</div>
-                       <div className='text-sm text-white/70 whitespace-pre-wrap'>{todo.notes}</div>
+                     <div className='p-3 rounded-lg bg-white/10 border border-white/10'>
+                       <div className='text-xs text-white/60 font-medium mb-1'>Qeydlər</div>
+                       <div className='text-sm text-white/80 whitespace-pre-wrap'>{todo.notes}</div>
                      </div>
                    )}
                  </li>
@@ -247,17 +213,13 @@ const toggleNotes = (id) => {
            ): (
             <>
               {hasAnyTodos ? (
-                <div className='flex justify-center items-center py-10 animate-fade-in'>
-                  <h2 className='font-bold text-2xl md:text-4xl bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent'>
-                    No matching tasks
-                  </h2>
+                <div className='flex justify-center items-center py-16 animate-fade-in'>
+                  <p className='text-white/70 text-lg'>Uyğun tapşırıq tapılmadı</p>
                 </div>
               ) : (
                 <>
-                  <div className='flex justify-center items-center py-12 animate-fade-in'>
-                    <h2 className='font-bold text-3xl md:text-5xl bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent'>
-                      Task List is Empty
-                    </h2>
+                  <div className='flex justify-center items-center pt-12 pb-4 animate-fade-in'>
+                    <h2 className='font-semibold text-xl text-white/80'>Siyahı boşdur</h2>
                   </div>
                   <EmptyList />
                 </>
@@ -276,7 +238,6 @@ const toggleNotes = (id) => {
             handleCancel={() => setIsModalOpen(false)}
           />
         </ul>
-      </div>
     </div>
   )
 }

@@ -33,12 +33,13 @@ const Createtodo = () => {
 
   return (
     <div>
-      <div
-        className='bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 flex items-center justify-center w-[64px] h-[64px] text-white rounded-full border-2 border-white/30 cursor-pointer fixed bottom-8 right-8 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 hover:rotate-90 z-50'
+      <button
+        type="button"
         onClick={showModal}
+        className='flex items-center justify-center w-14 h-14 text-white rounded-full bg-purple-600 hover:bg-purple-700 shadow-lg hover:shadow-xl border border-white/20 cursor-pointer fixed bottom-6 right-6 md:bottom-8 md:right-8 transition-all z-50'
       >
-        <FaPlus className='text-2xl' />
-      </div>
+        <FaPlus className='text-xl' />
+      </button>
 
       <Modal
         title={

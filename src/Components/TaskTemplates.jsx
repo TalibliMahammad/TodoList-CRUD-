@@ -63,11 +63,11 @@ const TaskTemplates = () => {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="h-[56px] px-5 rounded-xl text-white font-semibold bg-white/15 hover:bg-white/25 border border-white/20 shadow-lg transition-all flex items-center gap-2"
+        className="h-10 px-4 rounded-lg text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 border border-white/20 transition-colors flex items-center gap-2"
         type="button"
       >
-        <MdContentCopy className="text-xl" />
-        Templates
+        <MdContentCopy className="text-base" />
+        Şablonlar
       </button>
 
       <Modal

@@ -48,43 +48,46 @@ const Statistics = () => {
   }, [items])
 
   return (
-    <div className='w-full max-w-[900px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6'>
-      <div className='backdrop-blur-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl p-5 border border-green-400/30 shadow-xl'>
-        <div className='flex items-center justify-between mb-2'>
-          <div className='text-white/90 text-sm font-semibold'>Completed</div>
-          <MdCheckCircle className='text-green-300 text-2xl' />
+    <div className='grid grid-cols-2 lg:grid-cols-4 gap-3'>
+      <div className='flex items-center gap-3 p-4 rounded-xl bg-white/10 dark:bg-black/10 border border-white/20 backdrop-blur-sm'>
+        <div className='w-10 h-10 rounded-lg bg-green-500/30 flex items-center justify-center'>
+          <MdCheckCircle className='text-green-300 text-xl' />
         </div>
-        <div className='text-white text-3xl font-extrabold'>{stats.completed}</div>
-        <div className='text-white/70 text-xs mt-1'>{stats.completionRate}% completion rate</div>
-      </div>
-
-      <div className='backdrop-blur-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-2xl p-5 border border-blue-400/30 shadow-xl'>
-        <div className='flex items-center justify-between mb-2'>
-          <div className='text-white/90 text-sm font-semibold'>Active</div>
-          <MdPending className='text-blue-300 text-2xl' />
-        </div>
-        <div className='text-white text-3xl font-extrabold'>{stats.active}</div>
-        <div className='text-white/70 text-xs mt-1'>
-          {stats.priorityStats.High} High, {stats.priorityStats.Medium} Medium, {stats.priorityStats.Low} Low
+        <div>
+          <div className='text-white/70 text-xs'>Tamamlanan</div>
+          <div className='text-white text-xl font-bold'>{stats.completed}</div>
+          <div className='text-white/60 text-xs'>{stats.completionRate}%</div>
         </div>
       </div>
-
-      <div className='backdrop-blur-xl bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl p-5 border border-orange-400/30 shadow-xl'>
-        <div className='flex items-center justify-between mb-2'>
-          <div className='text-white/90 text-sm font-semibold'>Due Today</div>
-          <MdCalendarToday className='text-orange-300 text-2xl' />
+      <div className='flex items-center gap-3 p-4 rounded-xl bg-white/10 dark:bg-black/10 border border-white/20 backdrop-blur-sm'>
+        <div className='w-10 h-10 rounded-lg bg-blue-500/30 flex items-center justify-center'>
+          <MdPending className='text-blue-300 text-xl' />
         </div>
-        <div className='text-white text-3xl font-extrabold'>{stats.dueToday}</div>
-        <div className='text-white/70 text-xs mt-1'>{stats.overdue} overdue tasks</div>
+        <div>
+          <div className='text-white/70 text-xs'>Aktiv</div>
+          <div className='text-white text-xl font-bold'>{stats.active}</div>
+          <div className='text-white/60 text-xs'>H/M/L: {stats.priorityStats.High}/{stats.priorityStats.Medium}/{stats.priorityStats.Low}</div>
+        </div>
       </div>
-
-      <div className='backdrop-blur-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl p-5 border border-purple-400/30 shadow-xl'>
-        <div className='flex items-center justify-between mb-2'>
-          <div className='text-white/90 text-sm font-semibold'>Total</div>
-          <MdTrendingUp className='text-purple-300 text-2xl' />
+      <div className='flex items-center gap-3 p-4 rounded-xl bg-white/10 dark:bg-black/10 border border-white/20 backdrop-blur-sm'>
+        <div className='w-10 h-10 rounded-lg bg-orange-500/30 flex items-center justify-center'>
+          <MdCalendarToday className='text-orange-300 text-xl' />
         </div>
-        <div className='text-white text-3xl font-extrabold'>{stats.total}</div>
-        <div className='text-white/70 text-xs mt-1'>{stats.archived} archived</div>
+        <div>
+          <div className='text-white/70 text-xs'>Bugün</div>
+          <div className='text-white text-xl font-bold'>{stats.dueToday}</div>
+          <div className='text-white/60 text-xs'>{stats.overdue} gecikmiş</div>
+        </div>
+      </div>
+      <div className='flex items-center gap-3 p-4 rounded-xl bg-white/10 dark:bg-black/10 border border-white/20 backdrop-blur-sm'>
+        <div className='w-10 h-10 rounded-lg bg-purple-500/30 flex items-center justify-center'>
+          <MdTrendingUp className='text-purple-300 text-xl' />
+        </div>
+        <div>
+          <div className='text-white/70 text-xs'>Cəmi</div>
+          <div className='text-white text-xl font-bold'>{stats.total}</div>
+          <div className='text-white/60 text-xs'>{stats.archived} arxiv</div>
+        </div>
       </div>
     </div>
   )

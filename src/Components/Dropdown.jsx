@@ -14,21 +14,21 @@ const Dropdown = ({ selected, setSelected, options = ["All", "Complete", "Incomp
   return (
     <div className="relative">
       <div
-        className={`bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 flex items-center ${widthClass} px-5 justify-between h-[56px] text-white rounded-xl border border-white/20 cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
+        className={`bg-white/10 hover:bg-white/20 flex items-center ${widthClass} px-4 justify-between h-10 text-white rounded-lg border border-white/20 cursor-pointer transition-colors`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="text-lg font-semibold">{selected}</span>
-        <FaAngleDown className={`text-white text-xl transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-sm font-medium truncate">{selected}</span>
+        <FaAngleDown className={`text-white/80 text-sm shrink-0 ml-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </div>
 
       {isOpen && (
-        <ul className="absolute z-20 top-[64px] w-full backdrop-blur-xl bg-white/95 dark:bg-gray-800/95 shadow-2xl rounded-xl text-gray-800 dark:text-white border border-white/20 overflow-hidden animate-fade-in">
+        <ul className="absolute z-20 top-full mt-1.5 w-full backdrop-blur-xl bg-white/95 dark:bg-gray-800/95 shadow-xl rounded-lg text-gray-800 dark:text-white border border-gray-200 dark:border-gray-600 overflow-hidden animate-fade-in">
           {options.map((option) => (
             <li
               key={option}
               onClick={() => handleSelect(option)}
-              className={`px-5 py-3 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 dark:hover:from-purple-900/50 dark:hover:to-pink-900/50 cursor-pointer transition-all duration-200 font-medium ${
-                selected === option ? 'bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-800/50 dark:to-pink-800/50' : ''
+              className={`px-4 py-2.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-700/50 cursor-pointer transition-colors ${
+                selected === option ? 'bg-purple-100 dark:bg-purple-900/30 font-medium' : ''
               }`}
             >
               {option}

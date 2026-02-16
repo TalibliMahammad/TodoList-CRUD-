@@ -130,87 +130,69 @@ const TodoInput = () => {
 
 
     return (
-        <div className='min-h-screen pb-20'>
-            <div className='flex items-center justify-center pt-8 pb-6 animate-fade-in'>
-                <h1 className='text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent drop-shadow-lg'>
+        <div className='min-h-screen pb-24 px-4'>
+            <header className='max-w-3xl mx-auto pt-8 pb-6 animate-fade-in'>
+                <h1 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-purple-100 to-pink-100 bg-clip-text text-transparent'>
                     Todo List
                 </h1>
-            </div>
+            </header>
 
-            <div className='flex justify-center px-4 pb-4 animate-fade-in'>
+            <div className='max-w-3xl mx-auto animate-fade-in'>
                 <Statistics />
             </div>
 
-            <div className='flex flex-col gap-4 items-center justify-center px-4 animate-fade-in'>
-                <div className='w-full max-w-[900px] flex flex-col md:flex-row items-stretch md:items-end justify-between gap-4'>
-                    <div className='backdrop-blur-xl bg-white/20 dark:bg-black/20 shadow-2xl rounded-2xl p-2 flex items-center justify-between border border-white/30 dark:border-white/10 transition-all duration-300'>
-                    <input 
+            <section className='max-w-3xl mx-auto mt-6 space-y-4 animate-fade-in'>
+                {/* Search */}
+                <div className='flex items-center gap-2 p-2 rounded-xl bg-white/10 dark:bg-black/10 border border-white/20 backdrop-blur-sm'>
+                    <CiSearch className={`${isDarkMode ? 'text-white/70' : 'text-purple-600/80'} text-xl shrink-0 ml-2`} />
+                    <input
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)} 
-                        type="text" 
-                        placeholder="Search todo... (Ctrl+K)" 
-                        className={`${isDarkMode ? 'text-white placeholder:text-gray-300' : 'text-gray-800 placeholder:text-gray-500'} bg-transparent border-none p-3 rounded-xl w-[300px] md:w-[400px] lg:w-[505px] outline-none text-lg md:text-xl focus:ring-2 focus:ring-white/50`} 
+                        onChange={(e) => setQuery(e.target.value)}
+                        type="text"
+                        placeholder="Axtarış... (Ctrl+K)"
+                        className={`flex-1 min-w-0 py-2.5 bg-transparent border-none outline-none text-base ${isDarkMode ? 'text-white placeholder:text-white/50' : 'text-gray-800 placeholder:text-gray-500'}`}
                     />
-                    <CiSearch className={`${isDarkMode ? 'text-white' : 'text-purple-700'} text-3xl md:text-4xl mr-2`} />
-                    </div>
+                </div>
 
-                    <div className='flex flex-wrap gap-3 justify-between md:justify-end'>
-                        <div className='flex items-center justify-between rounded-xl cursor-pointer overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300'>
-                            <Dropdown selected={selected} setSelected={setSelected} options={filterOptions} />
-                        </div>
-                        {uniqueAssignees.length > 0 && (
-                            <div className='flex items-center justify-between rounded-xl cursor-pointer overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300'>
-                                <Dropdown 
-                                    selected={filterAssignee} 
-                                    setSelected={setFilterAssignee} 
-                                    options={["All", ...uniqueAssignees]} 
-                                    widthClass="w-[150px]" 
-                                />
-                            </div>
-                        )}
-                        {uniqueCategories.length > 0 && (
-                            <div className='flex items-center justify-between rounded-xl cursor-pointer overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300'>
-                                <Dropdown 
-                                    selected={filterCategory} 
-                                    setSelected={setFilterCategory} 
-                                    options={["All", ...uniqueCategories]} 
-                                    widthClass="w-[150px]" 
-                                />
-                            </div>
-                        )}
-                        <div className='flex items-center justify-between rounded-xl cursor-pointer overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300'>
-                            <Dropdown selected={sortBy} setSelected={setSortBy} options={sortOptions} widthClass="w-[180px]" />
-                        </div>
-
+                {/* Filters row */}
+                <div className='flex flex-wrap items-center gap-2'>
+                    <Dropdown selected={selected} setSelected={setSelected} options={filterOptions} widthClass="w-[130px]" />
+                    <Dropdown selected={sortBy} setSelected={setSortBy} options={sortOptions} widthClass="w-[130px]" />
+                    {uniqueAssignees.length > 0 && (
+                        <Dropdown selected={filterAssignee} setSelected={setFilterAssignee} options={["All", ...uniqueAssignees]} widthClass="w-[120px]" />
+                    )}
+                    {uniqueCategories.length > 0 && (
+                        <Dropdown selected={filterCategory} setSelected={setFilterCategory} options={["All", ...uniqueCategories]} widthClass="w-[120px]" />
+                    )}
+                    <div className='flex-1 min-w-[80px]' />
+                    <div className='flex items-center gap-2'>
                         <TaskTemplates />
                         <ExportImport />
-
                         <button
                             onClick={() => dispatch(clearCompleted())}
-                            className="h-[56px] px-5 rounded-xl text-white font-semibold bg-white/15 hover:bg-white/25 border border-white/20 shadow-lg transition-all"
+                            className="h-10 px-4 rounded-lg text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 border border-white/20 transition-colors"
                             type="button"
                         >
-                            Clear completed
+                            Təmizlə
                         </button>
-
                         <button
                             onClick={() => dispatch(toggleAll(!stats.allCompleted))}
-                            className="h-[56px] px-5 rounded-xl text-white font-semibold bg-white/15 hover:bg-white/25 border border-white/20 shadow-lg transition-all"
+                            className="h-10 px-4 rounded-lg text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 border border-white/20 transition-colors"
                             type="button"
                         >
-                            {stats.allCompleted ? 'Unmark all' : 'Mark all'}
+                            {stats.allCompleted ? 'Ləğv et' : 'Hamısı'}
                         </button>
-
-                        <div className={`${isDarkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gradient-to-br from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'} flex items-center justify-center w-[56px] h-[56px] text-white rounded-xl shadow-lg hover:shadow-xl cursor-pointer transition-all duration-300 transform hover:scale-110 hover:rotate-12`}>
-                            {
-                                isDarkMode
-                                    ? <FaMoon onClick={() => dispatch(toggleDarkMode())} className='text-2xl transition-transform duration-300 hover:rotate-180' />
-                                    : <FaSun onClick={() => dispatch(toggleDarkMode())} className='text-2xl transition-transform duration-300 hover:rotate-180' />
-                            }
-                        </div>
+                        <button
+                            onClick={() => dispatch(toggleDarkMode())}
+                            className={`h-10 w-10 flex items-center justify-center rounded-lg border border-white/20 transition-colors ${isDarkMode ? 'bg-white/10 hover:bg-white/20' : 'bg-purple-600/80 hover:bg-purple-600'}`}
+                            type="button"
+                        >
+                            {isDarkMode ? <FaMoon className='text-lg text-white' /> : <FaSun className='text-lg text-white' />}
+                        </button>
                     </div>
                 </div>
-            </div>
+            </section>
+
             <TodoList todos={derived} allCount={items?.length ?? 0} selectedIds={selectedIds} setSelectedIds={setSelectedIds} />
 
             <Createtodo />
